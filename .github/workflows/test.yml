@@ -1,0 +1,29 @@
+name: Test-status
+
+on:
+  push: 
+    branches: 
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run-linter:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+
+      - name: Install dependences
+        run: |
+          gem install bundler
+          bundle install
+
+      - name: Run Test
+        run: |
+          make test
