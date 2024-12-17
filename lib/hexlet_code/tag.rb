@@ -6,23 +6,11 @@ module HexletCode
     SINGLE_TAGS = %w[br input img link meta].freeze
 
     def self.build(name, **options)
-      additions = options.empty? ? "" : make_params(options)
+      additions = options.map { |key, value| "#{additions} #{key}=\"#{value}\"" }.join
 
       block_val = block_given? ? yield : ""
 
       SINGLE_TAGS.include?(name) ? "<#{name}#{additions}>" : "<#{name}#{additions}>#{block_val}</#{name}>"
-    end
-
-    private
-
-    def make_params(options)
-      result = ""
-
-      options.map do |key, value|
-        result = "#{result} #{key}=\"#{value}\""
-      end
-
-      result
     end
   end
 end

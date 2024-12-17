@@ -23,9 +23,46 @@ gem install UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
 ```
 
 ## Usage
+Using the HexletCode.form_for method, you can create HTML forms with specific fields based on the passed object.
 
-TODO: Write usage instructions here
+```ruby
+User = Struct.new(:name, :job, :gender, keyword_init: true)
+user = User.new name: 'rob', job: 'hexlet', gender: 'm'
 
+HexletCode.form_for user do |f|
+  # Проверяет есть ли значение внутри name
+  f.input :name
+  # Проверяет есть ли значение внутри job
+  f.input :job, as: :text
+end
+```
+It will return the following HTML code.
+
+```html
+<form action="#" method="post"><input name="name" type="text" value="rob"><textarea name="job" cols="20" rows="40">hexlet</textarea></form>
+```
+
+You can generate an html tags by using Tag module
+```ruby
+HexletCode::Tag.build('br')
+# <br>
+
+HexletCode::Tag.build('img', src: 'path/to/image')
+# <img src="path/to/image">
+
+HexletCode::Tag.build('input', type: 'submit', value: 'Save')
+# <input type="submit" value="Save">
+
+# Для парных тегов тело передается как блок
+HexletCode::Tag.build('label') { 'Email' }
+# <label>Email</label>
+
+HexletCode::Tag.build('label', for: 'email') { 'Email' }
+# <label for="email">Email</label>
+
+HexletCode::Tag.build('div')
+# <div></div>
+```
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
