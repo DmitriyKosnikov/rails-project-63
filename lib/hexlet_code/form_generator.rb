@@ -9,10 +9,10 @@ module HexletCode
 
     def initialize(user)
       @user = user
-      @forms =[]
+      @forms = []
     end
 
-    def input(field_name, **options)
+    def input(field_name, **options) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
       value = user.public_send(field_name)
 
       default_attributes = { name: field_name }
@@ -21,15 +21,22 @@ module HexletCode
       when :text
         options.delete(:as)
         default_textarea_attributes = { cols: 20, rows: 40 }
-        @forms << Tag.build("textarea", **default_attributes.merge(default_textarea_attributes).merge(options)) { value }
+        @forms << Tag.build('textarea', **default_attributes.merge(default_textarea_attributes).merge(options)) do
+          value
+        end
       else
-        default_input_attributes = { type: "text", value: value }
-        @forms << Tag.build("input", **default_attributes.merge(default_input_attributes).merge(options))
+        @forms << Tag.build('label', for: field_name.to_s) { field_name.to_s.capitalize }
+        default_input_attributes = { type: 'text', value: value }
+        @forms << Tag.build('input', **default_attributes.merge(default_input_attributes).merge(options))
       end
     end
 
+    def submit(value = 'Save')
+      @forms << Tag.build('input', type: 'submit', value: value)
+    end
+
     def render_forms
-      @forms.join("")
+      @forms.join('')
     end
   end
 end

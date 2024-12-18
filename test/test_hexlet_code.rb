@@ -7,7 +7,7 @@ User = Struct.new(:name, :job, keyword_init: true)
 
 class TestHexletCode < Minitest::Test
   def setup
-    @user = User.new(name: "rob", job: "hexlet")
+    @user = User.new(name: 'rob', job: 'hexlet')
   end
 
   def test_that_it_has_a_version_number
@@ -21,7 +21,7 @@ class TestHexletCode < Minitest::Test
   end
 
   def test_form_for_with_options
-    result = HexletCode.form_for(@user, class: "hexlet-form")
+    result = HexletCode.form_for(@user, class: 'hexlet-form')
     expected_value = '<form action="#" method="post" class="hexlet-form"></form>'
     assert_equal expected_value, result
   end
@@ -30,7 +30,7 @@ class TestHexletCode < Minitest::Test
     result = HexletCode.form_for(@user) do |f|
       f.input :name
     end
-    expected = '<form action="#" method="post"><input name="name" type="text" value="rob"></form>'
+    expected = '<form action="#" method="post"><label for="name">Name</label><input name="name" type="text" value="rob"></form>' # rubocop:disable Layout/LineLength
     assert_equal expected, result
   end
 
@@ -44,9 +44,9 @@ class TestHexletCode < Minitest::Test
 
   def test_form_with_custom_attributes
     result = HexletCode.form_for(@user) do |f|
-      f.input :name, class: "custom-class"
+      f.input :name, class: 'custom-class'
     end
-    expected = load_fixture("form_with_custom_attributes.html")
+    expected = load_fixture('form_with_custom_attributes.html')
     assert_equal expected, result
   end
 
@@ -54,7 +54,7 @@ class TestHexletCode < Minitest::Test
     result = HexletCode.form_for(@user) do |f|
       f.input :job, as: :text, rows: 50, cols: 50
     end
-    expected = load_fixture("form_with_overridden_textarea_attributes.html")
+    expected = load_fixture('form_with_overridden_textarea_attributes.html')
     assert_equal expected, result
   end
 
@@ -63,7 +63,17 @@ class TestHexletCode < Minitest::Test
       f.input :name
       f.input :job, as: :text
     end
-    expected = load_fixture("form_with_multiple_inputs.html")
+    expected = load_fixture('form_with_multiple_inputs.html')
+    assert_equal expected, result
+  end
+
+  def test_form_with_submit
+    result = HexletCode.form_for(@user) do |f|
+      f.input :name
+      f.input :job
+      f.submit 'Wow'
+    end
+    expected = load_fixture('form_with_submit.html')
     assert_equal expected, result
   end
 end

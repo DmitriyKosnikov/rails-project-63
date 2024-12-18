@@ -1,48 +1,49 @@
 [![Actions Status](https://github.com/DmitriyKosnikov/rails-project-63/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/DmitriyKosnikov/rails-project-63/actions)
 
+[![Linter Status](https://github.com/DmitriyKosnikov/rails-project-63/actions/workflows/lint.yml/badge.svg)](https://github.com/DmitriyKosnikov/rails-project-63/actions)
+
+[![Test Status](https://github.com/DmitriyKosnikov/rails-project-63/actions/workflows/test.yml/badge.svg)](https://github.com/DmitriyKosnikov/rails-project-63/actions)
+
 # HexletCode
 
-TODO: Delete this and the text below, and describe your gem
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/hexlet_code`. To experiment with that code, run `bin/console` for an interactive prompt.
+HexletCode - это гем для легкой генерации HTML форм. С помощью него вы сможете генерировать как формы так и обычные теги, с возможностью кастомизировать различные поля.
 
 ## Installation
-
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
-
 Install the gem and add to the application's Gemfile by executing:
 
 ```bash
-bundle add UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+bundle add hexlet-code
 ```
 
 If bundler is not being used to manage dependencies, install the gem by executing:
 
 ```bash
-gem install UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+gem install hexlet_code
 ```
 
 ## Usage
 Using the HexletCode.form_for method, you can create HTML forms with specific fields based on the passed object.
 
+Используя метод HexletCode.form_for, вы можете создавать HTML-формы с кастомизированными полями основанными на данных из другой структуры.
+
 ```ruby
-User = Struct.new(:name, :job, :gender, keyword_init: true)
-user = User.new name: 'rob', job: 'hexlet', gender: 'm'
+User = Struct.new(:name, :job, keyword_init: true)
+user = User.new job: 'hexlet'
 
 HexletCode.form_for user do |f|
-  # Проверяет есть ли значение внутри name
   f.input :name
-  # Проверяет есть ли значение внутри job
-  f.input :job, as: :text
+  f.input :job
+  f.submit
 end
 ```
-It will return the following HTML code.
+Вернет следующий код:
 
 ```html
-<form action="#" method="post"><input name="name" type="text" value="rob"><textarea name="job" cols="20" rows="40">hexlet</textarea></form>
+<form action="#" method="post">
+<label for="name">Name</label><input name="name" type="text" value=""><label for="job">Job</label><input name="job" type="text" value="hexlet"><input type="submit" value="Save"></form>
 ```
 
-You can generate an html tags by using Tag module
+Вы можете генерировать одиночные и парные теги с помощью модуля Tag.
 ```ruby
 HexletCode::Tag.build('br')
 # <br>
@@ -71,4 +72,4 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/hexlet_code.
+Bug reports and pull requests are welcome on GitHub at https://github.com/DmitriyKosnikov/hexlet_code.

@@ -8,7 +8,7 @@ module HexletCode
     def self.build(name, **options)
       additions = options.map { |key, value| "#{additions} #{key}=\"#{value}\"" }.join
 
-      block_val = block_given? ? yield : ""
+      block_val = block_given? ? yield : ''
 
       SINGLE_TAGS.include?(name) ? "<#{name}#{additions}>" : "<#{name}#{additions}>#{block_val}</#{name}>"
     end
