@@ -17,6 +17,8 @@ module HexletCode
 
       default_attributes = { name: field_name }
 
+      @forms << Tag.build('label', for: field_name.to_s) { field_name.to_s.capitalize }
+
       case options[:as]
       when :text
         options.delete(:as)
@@ -25,7 +27,6 @@ module HexletCode
           value
         end
       else
-        @forms << Tag.build('label', for: field_name.to_s) { field_name.to_s.capitalize }
         default_input_attributes = { type: 'text', value: value }
         @forms << Tag.build('input', **default_attributes.merge(default_input_attributes).merge(options))
       end

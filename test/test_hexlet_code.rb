@@ -30,7 +30,7 @@ class TestHexletCode < Minitest::Test
     result = HexletCode.form_for(@user) do |f|
       f.input :name
     end
-    expected = '<form action="#" method="post"><label for="name">Name</label><input name="name" type="text" value="rob"></form>' # rubocop:disable Layout/LineLength
+    expected = load_fixture('form_with_single_input.html')
     assert_equal expected, result
   end
 
@@ -38,7 +38,7 @@ class TestHexletCode < Minitest::Test
     result = HexletCode.form_for(@user) do |f|
       f.input :job, as: :text
     end
-    expected = '<form action="#" method="post"><textarea name="job" cols="20" rows="40">hexlet</textarea></form>'
+    expected = load_fixture('form_with_textarea.html')
     assert_equal expected, result
   end
 
