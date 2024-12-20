@@ -29,16 +29,16 @@ module HexletCode
 
     def render_textarea(options, value)
       options.delete(:as)
-      default_textarea_attributes = { cols: 20, rows: 40 }
-      attributes = @default_attributes.merge(default_textarea_attributes).merge(options)
+      default_textarea_attributes = { cols: 20, rows: 40 }.merge(options)
+      attributes = @default_attributes.merge(default_textarea_attributes)
       @forms << Tag.build('textarea', **attributes) do
         value
       end
     end
 
     def render_input(options, value)
-      default_input_attributes = { type: 'text', value: value }
-      attributes = @default_attributes.merge(default_input_attributes).merge(options)
+      default_input_attributes = { type: 'text', value: value }.merge(options)
+      attributes = @default_attributes.merge(default_input_attributes)
       @forms << Tag.build('input', **attributes)
     end
 

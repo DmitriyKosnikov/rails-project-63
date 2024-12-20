@@ -14,9 +14,9 @@ module HexletCode
     action = options.delete(:url) || '#'
     method = 'post'
 
-    prioritized_options = { action: action, method: method }
+    prioritized_options = { action: action, method: method }.merge(options)
 
-    Tag.build('form', **prioritized_options.merge(options)) do
+    Tag.build('form', **prioritized_options) do
       form_builder = HexletCode::FormGenetator.new(user)
       yield(form_builder) if block_given?
       form_builder.render_forms
