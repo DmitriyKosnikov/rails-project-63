@@ -1,4 +1,4 @@
-[![Actions Status](https://github.com/DmitriyKosnikov/rails-project-63/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/DmitriyKosnikov/rails-project-63/actions)
+[![Actions Status](https://github.com/DmitriyKosnikov/rails-project-63/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/DmitriyKosnikov/rails-project-63/actions) 
 
 [![Linter Status](https://github.com/DmitriyKosnikov/rails-project-63/actions/workflows/lint.yml/badge.svg)](https://github.com/DmitriyKosnikov/rails-project-63/actions)
 
