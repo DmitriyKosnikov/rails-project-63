@@ -8,18 +8,13 @@ module HexletCode
   # Your code goes here...
 
   autoload(:Tag, 'hexlet_code/tag')
-  autoload(:FormGenetator, 'hexlet_code/form_generator')
+  autoload(:FormBuilder, 'hexlet_code/form_builder.rb')
+  autoload(:FormRenderer, 'hexlet_code/form_renderer.rb')
+  autoload(:Inputs, 'hexlet_code/inputs')
 
-  def self.form_for(user, **options)
-    action = options.delete(:url) || '#'
-    method = 'post'
-
-    prioritized_options = { action: action, method: method }.merge(options)
-
-    Tag.build('form', **prioritized_options) do
-      form_builder = HexletCode::FormGenetator.new(user)
-      yield(form_builder) if block_given?
-      form_builder.render_forms
-    end
+  def self.form_for(entity, **options)
+    builded_forms = FormBuilder.new(entity)
+    yield(builded_forms) if block_given?
+    FormRenderer.render_html(builded_forms, **options)
   end
 end
