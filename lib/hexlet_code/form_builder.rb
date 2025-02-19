@@ -8,7 +8,7 @@ module HexletCode
     def initialize(entity, options)
       @entity = entity
       action = options.fetch(:action, '#')
-      method = options.fetch(:method, 'post')
+      method = options.fetch(:method, 'post').to_s
       @form_body = {
         inputs: [],
         submit: {},
