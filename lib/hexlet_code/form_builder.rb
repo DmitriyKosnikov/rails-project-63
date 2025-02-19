@@ -23,7 +23,7 @@ module HexletCode
 
       input_class = Inputs.const_get(class_name)
 
-      filtered_options = options.reject { |key, _| key == :as }
+      filtered_options = options.except(:as)
 
       @form_body[:inputs] << input_class.new(field_name, value, **filtered_options)
     end
