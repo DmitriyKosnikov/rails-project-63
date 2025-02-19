@@ -7,9 +7,11 @@ module HexletCode
     # Textarea rendering.
     class TextInput < BaseInput
       TAG = 'textarea'
+      COLS = 20
+      ROWS = 40
 
       def render
-        default_params = { cols: 20, rows: 40 }.merge(options)
+        default_params = { cols: COLS, rows: ROWS }.merge(options)
 
         render_label +
           Tag.build(TAG, name: name, **default_params) { value }

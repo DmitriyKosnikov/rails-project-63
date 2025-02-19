@@ -1,31 +1,35 @@
 # frozen_string_literal: true
 
-require_relative 'inputs/string_input'
-require_relative 'inputs/text_input'
-
 module HexletCode
   # Builder for all forms.
   class FormBuilder
-    attr_accessor :entity, :inputs, :submit_options
+    attr_accessor :entity, :form_body
 
-    def initialize(entity)
+    def initialize(entity, options)
       @entity = entity
-      @inputs = []
-      @submit_options = {}
+      action = options.fetch(:action, '#')
+      method = options.fetch(:method, 'post')
+      @form_body = {
+        inputs: [],
+        submit: {},
+        form_options: { action: action, method: method }.merge(options.except(:url, :method))
+      }
     end
 
     def input(field_name, **options)
       value = @entity.public_send(field_name)
 
-      @inputs << if options.delete(:as) == :text
-                   Inputs::TextInput.new(field_name, value, **options)
-                 else
-                   Inputs::StringInput.new(field_name, value, **options)
-                 end
+      class_name = "#{options.fetch(:as, :string).to_s.capitalize}Input"
+
+      input_class = Inputs.const_get(class_name)
+
+      filtered_options = options.reject { |key, _| key == :as }
+
+      @form_body[:inputs] << input_class.new(field_name, value, **filtered_options)
     end
 
     def submit(value = 'Save')
-      @submit_options = { type: 'submit', value: value }
+      @form_body[:submit] = { type: 'submit', value: value }
     end
   end
 end

@@ -5,14 +5,11 @@ require_relative 'tag'
 module HexletCode
   # Rendering form to HTML(or other languages)
   class FormRenderer
-    def self.render_html(form_builder, form_options)
-      action = form_options.delete(:url) || '#'
-      method = 'post'
+    def self.render_html(form_builder)
+      form_body = form_builder.form_body
 
-      prioritized_options = { action: action, method: method }.merge(form_options)
-
-      Tag.build('form', **prioritized_options) do
-        render_inputs(form_builder.inputs) + render_submit_html(**form_builder.submit_options)
+      Tag.build('form', **form_body[:form_options]) do
+        render_inputs(form_body[:inputs]) + render_submit_html(**form_body[:submit])
       end
     end
 
